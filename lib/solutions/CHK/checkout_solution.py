@@ -1,5 +1,6 @@
 from typing import Dict
 
+
 class PriceSpecs:
     def __init__(self, price, quantity_discounts={}, item_reducer=''):
         self.price = price
@@ -14,7 +15,7 @@ ITEMS = {"A": PriceSpecs(50, {5: 200, 3: 130}),
          "E": PriceSpecs(40),
          "F": PriceSpecs(10), "G": 20,
                     "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
-                    "O" :10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
+                    "O":10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
                     "V": 50, "W": 20, "X": 90, "Y": 10, "Z": 50}
 
 
@@ -26,7 +27,8 @@ class PriceCalculator:
         total_value = 0
         self.reduce_item_count_based_on_other_items()
         for item in self.items.keys():
-            if item == "A":
+            if ITEMS[item].quantity_discounts:
+
                 non_discounted_items_max_disc = self.items[item] % 5
                 non_discounted_items_count = (non_discounted_items_max_disc) % 3
                 total_value = total_value \
@@ -82,6 +84,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
