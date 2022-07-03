@@ -19,6 +19,3 @@ def checkout(skus):
     item_list = parse_request(skus)
     raise NotImplementedError()
 
-
-
-
