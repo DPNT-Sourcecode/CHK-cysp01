@@ -19,10 +19,12 @@ def calculate_value(item_list):
     total_value = 0
     for item in item_list.keys():
         if item == "A":
-            discounted_items_count = item_list[item] % 3
+            non_discounted_items_count = item_list[item] % 3
             total_value = total_value \
-                          + discounted_items_count * 130
-            + (item_list[item] -)
+                          + (item_list[item] - non_discounted_items_count)/3 \
+                          * 130 \
+                          + non_discounted_items_count*50
+    return total_value
 
 
 def checkout(skus):
@@ -30,6 +32,7 @@ def checkout(skus):
     if item_list:
         return calculate_value(item_list)
     return -1
+
 
 
 
