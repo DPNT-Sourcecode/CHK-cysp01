@@ -21,7 +21,7 @@ ITEMS = {"A": PriceSpecs(50, {5: 200, 3: 130}),
          "C": PriceSpecs(20),
          "D": PriceSpecs(15),
          "E": PriceSpecs(40, item_reducer=ItemReducer("B", 2)),
-         "F": PriceSpecs(10, item_reducer=3), "G": 20,
+         "F": PriceSpecs(10, free_item=3), "G": 20,
                     "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
                     "O":10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
                     "V": 50, "W": 20, "X": 90, "Y": 10, "Z": 50}
@@ -91,6 +91,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
