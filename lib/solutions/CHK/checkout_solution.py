@@ -7,8 +7,12 @@ class PriceSpecs:
         self.item_reducer = item_reducer
 
 
-ITEMS = {"A": PriceSpecs(50, {5: 200, 3:130}),
-         "B": PriceSpecs(30, {2: 45}), "C":20, "D": 15, "E": 40, "F": 10, "G": 20,
+ITEMS = {"A": PriceSpecs(50, {5: 200, 3: 130}),
+         "B": PriceSpecs(30, {2: 45}),
+         "C": PriceSpecs(20),
+         "D": PriceSpecs(15),
+         "E": PriceSpecs(40),
+         "F": PriceSpecs(10), "G": 20,
                     "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
                     "O" :10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
                     "V": 50, "W": 20, "X": 90, "Y": 10, "Z": 50}
@@ -78,6 +82,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
