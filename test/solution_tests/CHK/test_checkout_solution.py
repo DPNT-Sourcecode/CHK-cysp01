@@ -186,4 +186,12 @@ def test_checkout_given_group_discount():
 
     calc_value = checkout_solution.checkout(request)
 
-    assert calc_value ==1
+    assert calc_value == 137
+
+
+def test_checkout_given_group_discount_susbset_of_items():
+    request = "SSTXY"
+
+    calc_value = checkout_solution.checkout(request)
+
+    assert calc_value == 82

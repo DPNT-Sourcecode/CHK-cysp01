@@ -114,16 +114,17 @@ class PriceCalculator:
                                            - total_items_for_group_disc
                                            % group_disc.quantity)\
                                           / group_disc.quantity
-            for i in range(int(number_of_items_to_discount) + 1):
-                for k in item_list_sorted_by_price.keys():
-                    if reduced_item_list[k] > 0:
-                        total_value -= ITEMS[k].price \
-                                      - group_disc.group_discount_price\
-                                      / group_disc.quantity
-                        reduced_item_list[k] = reduced_item_list[k]\
-                                                      - 1
-                        break
-        return total_value
+            for i in range(int(number_of_items_to_discount)):
+                for j in range(0, group_disc.quantity):
+                    for k in item_list_sorted_by_price.keys():
+                        if reduced_item_list[k] > 0:
+                            total_value -= ITEMS[k].price \
+                                          - group_disc.group_discount_price\
+                                          / group_disc.quantity
+                            reduced_item_list[k] = reduced_item_list[k]\
+                                                          - 1
+                            break
+            return total_value
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -144,5 +145,6 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
