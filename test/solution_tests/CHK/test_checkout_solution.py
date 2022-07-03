@@ -112,8 +112,3 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
-
-
-
-
-
