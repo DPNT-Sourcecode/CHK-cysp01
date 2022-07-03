@@ -1,6 +1,6 @@
 from typing import Dict
 
-ITEM_IDENTIFIERS = {"A", "B", "C", "D"}
+ITEM_IDENTIFIERS = {"A", "B", "C", "D", "E"}
 
 
 class PriceSpecs:
@@ -35,7 +35,7 @@ class PriceCalculator:
 
     def calculate_value(self):
         total_value = 0
-
+        self.reduce_item_count_based_on_other_items()
         for item in self.items.keys():
             if item == "A":
                 non_discounted_items_max_disc = self.items[item] % 5
@@ -62,6 +62,9 @@ class PriceCalculator:
                 total_value = total_value + self.items[item] \
                               * PriceSpecs.price_per_item(item)
             elif item == 'D':
+                total_value = total_value + self.items[item] \
+                              * PriceSpecs.price_per_item(item)
+            elif item == 'E':
                 total_value = total_value + self.items[item] \
                               * PriceSpecs.price_per_item(item)
         return total_value
@@ -92,6 +95,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 

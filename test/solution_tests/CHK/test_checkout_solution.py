@@ -6,12 +6,12 @@ def test_parse_request_given_uppercase_and_existing_items():
 
     obtained_items = checkout_solution.parse_request(request)
 
-    expected_items = {"A": 2, "B": 1, "C": 1, "D": 0}
+    expected_items = {"A": 2, "B": 1, "C": 1, "D": 0, "E": 0}
     assert obtained_items == expected_items
 
 
 def test_parse_request_given_non_existing_item_identifier():
-    request = "AABCE"
+    request = "AABCT"
 
     obtained_items = checkout_solution.parse_request(request)
 
@@ -35,7 +35,7 @@ def test_parse_request_given_request_with_mixed_case():
 
 
 def test_calculate_value_given_item_a_and_no_discount():
-    given_items = {"A": 2, "B": 0, "C": 0, "D": 0}
+    given_items = {"A": 2, "B": 0, "C": 0, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -43,7 +43,7 @@ def test_calculate_value_given_item_a_and_no_discount():
 
 
 def test_calculate_value_given_item_a_and_only_small_discount():
-    given_items = {"A": 3, "B": 0, "C": 0, "D": 0}
+    given_items = {"A": 3, "B": 0, "C": 0, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -51,7 +51,7 @@ def test_calculate_value_given_item_a_and_only_small_discount():
 
 
 def test_calculate_value_given_item_a_and_only_big_discount():
-    given_items = {"A": 5, "B": 0, "C": 0, "D": 0}
+    given_items = {"A": 5, "B": 0, "C": 0, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -59,7 +59,7 @@ def test_calculate_value_given_item_a_and_only_big_discount():
 
 
 def test_calculate_value_given_item_a_and_both_discount_and_not():
-    given_items = {"A": 4, "B": 0, "C": 0, "D": 0}
+    given_items = {"A": 4, "B": 0, "C": 0, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -67,7 +67,7 @@ def test_calculate_value_given_item_a_and_both_discount_and_not():
 
 
 def test_calculate_value_given_item_a_and_two_discounts_and_not():
-    given_items = {"A": 9, "B": 0, "C": 0, "D": 0}
+    given_items = {"A": 9, "B": 0, "C": 0, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -75,7 +75,7 @@ def test_calculate_value_given_item_a_and_two_discounts_and_not():
 
 
 def test_calculate_value_given_item_b_and_no_discount():
-    given_items = {"A": 0, "B": 1, "C": 0, "D": 0}
+    given_items = {"A": 0, "B": 1, "C": 0, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -83,7 +83,7 @@ def test_calculate_value_given_item_b_and_no_discount():
 
 
 def test_calculate_value_given_item_b_and_only_discount():
-    given_items = {"A": 0, "B": 2, "C": 0, "D": 0}
+    given_items = {"A": 0, "B": 2, "C": 0, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -91,7 +91,7 @@ def test_calculate_value_given_item_b_and_only_discount():
 
 
 def test_calculate_value_given_item_b_and_both_discount_and_not():
-    given_items = {"A": 0, "B": 5, "C": 0, "D": 0}
+    given_items = {"A": 0, "B": 5, "C": 0, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -99,7 +99,7 @@ def test_calculate_value_given_item_b_and_both_discount_and_not():
 
 
 def test_calculate_value_given_item_c():
-    given_items = {"A": 0, "B": 0, "C": 2, "D": 0}
+    given_items = {"A": 0, "B": 0, "C": 2, "D": 0, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
@@ -107,11 +107,19 @@ def test_calculate_value_given_item_c():
 
 
 def test_calculate_value_given_item_d():
-    given_items = {"A": 0, "B": 0, "C": 0, "D": 2}
+    given_items = {"A": 0, "B": 0, "C": 0, "D": 2, "E": 0}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 30
+
+
+def test_calculate_value_given_item_e_no_b():
+    given_items = {"A": 0, "B": 0, "C": 0, "D": 0, "E": 1}
+
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
+
+    assert calc_value == 40
 
 
 def test_checkout_given_valid_request():
@@ -128,4 +136,5 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
+
 
