@@ -4,6 +4,7 @@ class ItemReducer:
     def __init__(self, item, quantity):
         self.item = item
         self.quantity = quantity
+
 class PriceSpecs:
     def __init__(self, price, quantity_discounts=None, item_reducer=None, free_item=0):
         self.price = price
@@ -17,7 +18,7 @@ ITEMS = {"A": PriceSpecs(50, {5: 200, 3: 130}),
          "C": PriceSpecs(20),
          "D": PriceSpecs(15),
          "E": PriceSpecs(40, item_reducer=ItemReducer("B", 2)),
-         "F": PriceSpecs(10), "G": 20,
+         "F": PriceSpecs(10, item_reducer=3), "G": 20,
                     "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
                     "O":10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
                     "V": 50, "W": 20, "X": 90, "Y": 10, "Z": 50}
@@ -58,9 +59,14 @@ class PriceCalculator:
                                         - number_of_items_to_reduce
                 self.items[item_to_reduce] = final_number_of_items \
                     if final_number_of_items > 0 else 0
-        if "F" in self.items.keys() and self.items["F"] > 2:
-            number_of_f_items_to_reduce = int(self.items["F"] / 3)
-            self.items["F"] = self.items["F"] - number_of_f_items_to_reduce
+            if ITEMS[item].free_item > 0:
+                number_of_items_to_reduce = int(self.items[item]
+                                                  / ITEMS[item].free_item)
+
+                self.items[item] = self.items[item] - number_of_items_to_reduce
+        # if "F" in self.items.keys() and self.items["F"] > 2:
+        #     number_of_f_items_to_reduce = int(self.items["F"] / 3)
+        #     self.items["F"] = self.items["F"] - number_of_f_items_to_reduce
 
 
 # noinspection PyUnusedLocal
@@ -82,6 +88,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
