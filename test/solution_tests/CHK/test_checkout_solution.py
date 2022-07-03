@@ -37,7 +37,7 @@ def test_parse_request_given_request_with_mixed_case():
 def test_calculate_value_given_item_a_and_no_discount():
     given_items = {"A": 2, "B": 0, "C": 0, "D": 0}
 
-    calc_value = checkout_solution.calculate_value(given_items)
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 100
 
@@ -45,7 +45,7 @@ def test_calculate_value_given_item_a_and_no_discount():
 def test_calculate_value_given_item_a_and_only_discount():
     given_items = {"A": 3, "B": 0, "C": 0, "D": 0}
 
-    calc_value = checkout_solution.calculate_value(given_items)
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 130
 
@@ -53,7 +53,7 @@ def test_calculate_value_given_item_a_and_only_discount():
 def test_calculate_value_given_item_a_and_both_discount_and_not():
     given_items = {"A": 4, "B": 0, "C": 0, "D": 0}
 
-    calc_value = checkout_solution.calculate_value(given_items)
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 180
 
@@ -61,7 +61,7 @@ def test_calculate_value_given_item_a_and_both_discount_and_not():
 def test_calculate_value_given_item_b_and_no_discount():
     given_items = {"A": 0, "B": 1, "C": 0, "D": 0}
 
-    calc_value = checkout_solution.calculate_value(given_items)
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 30
 
@@ -69,7 +69,7 @@ def test_calculate_value_given_item_b_and_no_discount():
 def test_calculate_value_given_item_b_and_only_discount():
     given_items = {"A": 0, "B": 2, "C": 0, "D": 0}
 
-    calc_value = checkout_solution.calculate_value(given_items)
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 45
 
@@ -77,7 +77,7 @@ def test_calculate_value_given_item_b_and_only_discount():
 def test_calculate_value_given_item_b_and_both_discount_and_not():
     given_items = {"A": 0, "B": 5, "C": 0, "D": 0}
 
-    calc_value = checkout_solution.calculate_value(given_items)
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 120
 
@@ -85,7 +85,7 @@ def test_calculate_value_given_item_b_and_both_discount_and_not():
 def test_calculate_value_given_item_c():
     given_items = {"A": 0, "B": 0, "C": 2, "D": 0}
 
-    calc_value = checkout_solution.calculate_value(given_items)
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 40
 
@@ -93,7 +93,7 @@ def test_calculate_value_given_item_c():
 def test_calculate_value_given_item_d():
     given_items = {"A": 0, "B": 0, "C": 0, "D": 2}
 
-    calc_value = checkout_solution.calculate_value(given_items)
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
     assert calc_value == 30
 
@@ -112,3 +112,4 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
+
