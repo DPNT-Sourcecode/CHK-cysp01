@@ -1,9 +1,18 @@
 from typing import Dict
 
-ITEMS = {"A": 50, "B": 30, "C":20, "D": 15, "E": 40, "F": 10, "G": 20,
+class PriceSpecs:
+    def __init__(self, price, quantity_discounts={}, item_reducer=''):
+        self.price = price
+        self.quantity_discounts = quantity_discounts
+        self.item_reducer = item_reducer
+
+
+ITEMS = {"A": PriceSpecs(50, {5: 200, 3:130}),
+         "B": PriceSpecs(30, {2: 45}), "C":20, "D": 15, "E": 40, "F": 10, "G": 20,
                     "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
                     "O" :10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
                     "V": 50, "W": 20, "X": 90, "Y": 10, "Z": 50}
+
 
 class PriceCalculator:
     def __init__(self, items: Dict[str, int]):
@@ -25,7 +34,7 @@ class PriceCalculator:
                                  - non_discounted_items_count) / 3 \
                               * 130 \
                               + non_discounted_items_count * \
-                              ITEMS[item]
+                              ITEMS[item].price
             elif item == 'B':
                 non_discounted_items_count = self.items[item] % 2
                 total_value = total_value \
@@ -33,10 +42,10 @@ class PriceCalculator:
                                      item] - non_discounted_items_count) / 2 \
                               * 45 \
                               + non_discounted_items_count \
-                              * ITEMS[item]
+                              * ITEMS[item].price
             else:
                 total_value = total_value + self.items[item] \
-                              * ITEMS[item]
+                              * ITEMS[item].price
         return total_value
 
     def reduce_item_count_based_on_other_items(self):
@@ -69,5 +78,6 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
