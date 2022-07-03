@@ -6,7 +6,7 @@ def test_parse_request_given_uppercase_and_existing_items():
 
     obtained_items = checkout_solution.parse_request(request)
 
-    expected_items = {"A": 2, "B": 1, "C": 1, "D": 0, "E": 0}
+    expected_items = {"A": 2, "B": 1, "C": 1, "D": 0, "E": 0, "F": 0}
     assert obtained_items == expected_items
 
 
@@ -138,6 +138,14 @@ def test_calculate_value_given_item_e_and_b_and_discount():
     assert calc_value == 80
 
 
+def test_calculate_value_given_item_f_no_discount():
+    given_items = {"A": 0, "B": 1, "C": 0, "D": 0, "E": 2, "F": 1}
+
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
+
+    assert calc_value == 10
+
+
 def test_checkout_given_valid_request():
     request = "ABAACBAD"
 
@@ -152,6 +160,7 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
+
 
 
 

@@ -1,6 +1,6 @@
 from typing import Dict
 
-ITEM_IDENTIFIERS = {"A", "B", "C", "D", "E"}
+ITEM_IDENTIFIERS = {"A", "B", "C", "D", "E", "F"}
 
 
 class PriceSpecs:
@@ -16,17 +16,8 @@ class PriceSpecs:
             return 15
         elif item == "E":
             return 40
-
-
-# class PriceDiscounter:
-#     def __init__(self, items: Dict[str, int]):
-#         self.items = items
-#
-#     def reduce_price(self, value):
-#         value -= round((self.items["A"] - self.items["A"] % 5)*10
-#                        - (self.items["A"] - self.items["A"] % 3)*6.7)
-#         value -= round((self.items["B"] - self.items["B"] % 2)*7.5)
-#         return value
+        elif item == "F":
+            return 10
 
 
 class PriceCalculator:
@@ -58,13 +49,7 @@ class PriceCalculator:
                               * 45 \
                               + non_discounted_items_count \
                               * PriceSpecs.price_per_item(item)
-            elif item == 'C':
-                total_value = total_value + self.items[item] \
-                              * PriceSpecs.price_per_item(item)
-            elif item == 'D':
-                total_value = total_value + self.items[item] \
-                              * PriceSpecs.price_per_item(item)
-            elif item == 'E':
+            else:
                 total_value = total_value + self.items[item] \
                               * PriceSpecs.price_per_item(item)
         return total_value
@@ -75,6 +60,11 @@ class PriceCalculator:
         final_number_of_items = self.items["B"] - number_of_b_items_to_reduce
         self.items["B"] = final_number_of_items if final_number_of_items > 0 \
             else 0
+        if "F" in self.items.keys() and self.items["F"] > 2:
+            number_of_f_items_to_reduce = (self.items["F"] - self.items["F"] % 2) \
+                                      / 2
+            self.items["F"] = self.items["F"] - number_of_f_items_to_reduce
+
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -95,6 +85,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
