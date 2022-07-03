@@ -155,11 +155,11 @@ def test_calculate_value_given_item_f_and_two_items():
 
 
 def test_calculate_value_given_item_f_and_discount():
-    given_items = {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 5}
+    given_items = {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 6}
 
     calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
 
-    assert calc_value == 30
+    assert calc_value == 40
 
 
 def test_checkout_given_valid_request():
@@ -176,3 +176,4 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
+

@@ -61,8 +61,7 @@ class PriceCalculator:
         self.items["B"] = final_number_of_items if final_number_of_items > 0 \
             else 0
         if "F" in self.items.keys() and self.items["F"] > 2:
-            number_of_f_items_to_reduce = (self.items["F"] - self.items["F"] % 3) \
-                                      / 2
+            number_of_f_items_to_reduce = self.items["F"] % 3 / 2
             self.items["F"] = self.items["F"] - number_of_f_items_to_reduce
 
 
@@ -85,6 +84,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
