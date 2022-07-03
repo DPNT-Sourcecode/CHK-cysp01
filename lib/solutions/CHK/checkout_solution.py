@@ -15,7 +15,19 @@ def parse_request(skus):
     return item_list
 
 
+def calculate_value(item_list):
+    total_value = 0
+    for item in item_list.keys():
+        if item == "A":
+            item_count =
+            total_value = total_value +
+
+
 def checkout(skus):
     item_list = parse_request(skus)
-    raise NotImplementedError()
+    if item_list:
+        return calculate_value(item_list)
+    return -1
+
+
 
