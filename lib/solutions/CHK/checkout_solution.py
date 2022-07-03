@@ -1,3 +1,4 @@
+ITEM_IDENTIFIERS = {"A", "B", "C", "D"}
 
 
 # noinspection PyUnusedLocal
@@ -6,11 +7,15 @@ def parse_request(skus):
     item_list = []
     if not isinstance(skus, str):
         return None
+    for s in skus:
+        if s.upper() not in ITEM_IDENTIFIERS:
+            return None
 
 
 
 def checkout(skus):
     item_list = parse_request(skus)
     raise NotImplementedError()
+
 
 
