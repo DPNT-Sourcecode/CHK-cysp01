@@ -122,6 +122,22 @@ def test_calculate_value_given_item_e_no_b():
     assert calc_value == 40
 
 
+def test_calculate_value_given_item_e_and_b_but_no_discount():
+    given_items = {"A": 0, "B": 1, "C": 0, "D": 0, "E": 1}
+
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
+
+    assert calc_value == 70
+
+
+def test_calculate_value_given_item_e_and_b_and_discount():
+    given_items = {"A": 0, "B": 1, "C": 0, "D": 0, "E": 2}
+
+    calc_value = checkout_solution.PriceCalculator(given_items).calculate_value()
+
+    assert calc_value == 80
+
+
 def test_checkout_given_valid_request():
     request = "ABAACBAD"
 
@@ -136,5 +152,6 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
+
 
 
