@@ -102,8 +102,8 @@ class PriceCalculator:
                                      for k in self.items.keys()
                                      if k in group_disc.items_list)
             reduced_item_list_sorted = {key: value for key, value
-                                        in sorted(reduced_item_list.items(),
-                                                  key=lambda item: item[1])}
+                                        in sorted(ITEMS.items(),
+                                                  key=lambda item: item.price)}
             total_items_for_group_disc = 0
             for item in group_disc.items_list:
                 if item in reduced_item_list_sorted.keys():
@@ -142,5 +142,6 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
