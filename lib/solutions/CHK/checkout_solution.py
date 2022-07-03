@@ -76,8 +76,7 @@ class PriceCalculator:
             else:
                 total_value = total_value + self.items[item] \
                               * ITEMS[item].price
-        # return self.reduce_price_for_group_discount(total_value)
-        return total_value
+        return self.reduce_price_for_group_discount(total_value)
 
     def reduce_item_count_based_on_other_items(self):
         for item in self.items.keys():
@@ -100,7 +99,7 @@ class PriceCalculator:
     def reduce_price_for_group_discount(self, total_value):
         for group_disc in GROUP_DISCOUNTS:
             reduced_item_list = dict((k, self.items[k])
-                                     for k, v in self.items.keys()
+                                     for k in self.items.keys()
                                      if k in group_disc.items_list)
             reduced_item_list_sorted = {key: value for key, value
                                         in sorted(reduced_item_list.items(),
@@ -121,6 +120,7 @@ class PriceCalculator:
                                                       - 1
                         continue
         return total_value
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def parse_request(skus):
@@ -140,6 +140,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
