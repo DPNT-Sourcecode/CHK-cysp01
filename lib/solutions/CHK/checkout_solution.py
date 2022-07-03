@@ -16,15 +16,31 @@ class PriceSpecs:
         self.free_item = free_item
 
 
-ITEMS = {"A": PriceSpecs(50, {5: 200, 3: 130}),
-         "B": PriceSpecs(30, {2: 45}),
+ITEMS = {"A": PriceSpecs(50, quantity_discounts={5: 200, 3: 130}),
+         "B": PriceSpecs(30, quantity_discounts={2: 45}),
          "C": PriceSpecs(20),
          "D": PriceSpecs(15),
          "E": PriceSpecs(40, item_reducer=ItemReducer("B", 2)),
-         "F": PriceSpecs(10, free_item=3), "G": 20,
-                    "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
-                    "O":10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
-                    "V": 50, "W": 20, "X": 90, "Y": 10, "Z": 50}
+         "F": PriceSpecs(10, free_item=3),
+         "G": PriceSpecs(20),
+         "H": PriceSpecs(10,quantity_discounts={10: 80, 5:45}),
+         "I": PriceSpecs(35), "J": PriceSpecs(60),
+         "K": PriceSpecs(80, quantity_discounts={2: 150}),
+         "L": PriceSpecs(90),
+         "M": PriceSpecs(15),
+         "N": PriceSpecs(40, item_reducer=ItemReducer("M", 3)),
+         "O": PriceSpecs(10),
+         "P": PriceSpecs(50, quantity_discounts={5: 200}),
+         "Q": PriceSpecs(30, quantity_discounts={3: 80}),
+         "R": PriceSpecs(50, item_reducer=ItemReducer("Q", 3)),
+         "S": PriceSpecs(30),
+         "T": PriceSpecs(20),
+         "U": PriceSpecs(40, free_item=4),
+         "V": PriceSpecs(50, quantity_discounts={3: 130, 2:90}),
+         "W": PriceSpecs(20),
+         "X": PriceSpecs(90),
+         "Y": PriceSpecs(10),
+         "Z": PriceSpecs(50)}
 
 
 class PriceCalculator:
@@ -91,6 +107,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
