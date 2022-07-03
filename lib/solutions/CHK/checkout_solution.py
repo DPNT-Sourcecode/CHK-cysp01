@@ -1,24 +1,9 @@
 from typing import Dict
 
-ITEM_IDENTIFIERS = {"A", "B", "C", "D", "E", "F"}
-
-
-class PriceSpecs:
-    @staticmethod
-    def price_per_item(item):
-        if item == "A":
-            return 50
-        elif item == "B":
-            return 30
-        elif item == "C":
-            return 20
-        elif item == "D":
-            return 15
-        elif item == "E":
-            return 40
-        elif item == "F":
-            return 10
-
+ITEMS = {"A": 50, "B": 30, "C":20, "D": 15, "E": 40, "F": 10, "G": 20,
+                    "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
+                    "O" :10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
+                    "V": 50, "W": 20, "X": 90, "Y": 10, "Z": 50}
 
 class PriceCalculator:
     def __init__(self, items: Dict[str, int]):
@@ -40,7 +25,7 @@ class PriceCalculator:
                                  - non_discounted_items_count) / 3 \
                               * 130 \
                               + non_discounted_items_count * \
-                              PriceSpecs.price_per_item(item)
+                              ITEMS[item]
             elif item == 'B':
                 non_discounted_items_count = self.items[item] % 2
                 total_value = total_value \
@@ -48,10 +33,10 @@ class PriceCalculator:
                                      item] - non_discounted_items_count) / 2 \
                               * 45 \
                               + non_discounted_items_count \
-                              * PriceSpecs.price_per_item(item)
+                              * ITEMS[item]
             else:
                 total_value = total_value + self.items[item] \
-                              * PriceSpecs.price_per_item(item)
+                              * ITEMS[item]
         return total_value
 
     def reduce_item_count_based_on_other_items(self):
@@ -68,7 +53,7 @@ class PriceCalculator:
 # noinspection PyUnusedLocal
 # skus = unicode string
 def parse_request(skus):
-    item_list = dict.fromkeys(ITEM_IDENTIFIERS, 0)
+    item_list = dict.fromkeys(ITEMS, 0)
     if not isinstance(skus, str):
         return None
     for s in skus:
@@ -84,6 +69,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 

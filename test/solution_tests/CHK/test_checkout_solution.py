@@ -6,7 +6,10 @@ def test_parse_request_given_uppercase_and_existing_items():
 
     obtained_items = checkout_solution.parse_request(request)
 
-    expected_items = {"A": 2, "B": 1, "C": 1, "D": 0, "E": 0, "F": 0}
+    expected_items = dict.fromkeys(checkout_solution.ITEMS)
+    expected_items["A"] = 2
+    expected_items["B"] = 1
+    expected_items["C"] = 1
     assert obtained_items == expected_items
 
 
@@ -184,5 +187,6 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
+
 
 
