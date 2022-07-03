@@ -101,24 +101,26 @@ class PriceCalculator:
             reduced_item_list = dict((k, self.items[k])
                                      for k in self.items.keys()
                                      if k in group_disc.items_list)
-            reduced_item_list_sorted = {key: value for key, value
-                                        in sorted(ITEMS.items(),
-                                                  key=lambda item: item.price)}
+            item_list_sorted_by_price = {key: value for key, value
+                                         in sorted(ITEMS.items(),
+                                                   key=lambda item:
+                                                   item[1].price, reverse=True)
+                                         if key in GROUP_DISCOUNTS[0].items_list}
             total_items_for_group_disc = 0
             for item in group_disc.items_list:
-                if item in reduced_item_list_sorted.keys():
-                    total_items_for_group_disc += reduced_item_list_sorted[item]
+                if item in reduced_item_list.keys():
+                    total_items_for_group_disc += reduced_item_list[item]
             number_of_items_to_discount = (total_items_for_group_disc
                                            - total_items_for_group_disc
                                            % group_disc.quantity)\
                                           / group_disc.quantity
             for i in range(int(number_of_items_to_discount)):
-                for k in reduced_item_list_sorted.keys():
-                    if reduced_item_list_sorted[k] > 0:
+                for k in item_list_sorted_by_price.keys():
+                    if reduced_item_list[k] > 0:
                         total_value -= ITEMS[k].price \
                                       - group_disc.group_discount_price\
                                       / group_disc.quantity
-                        reduced_item_list_sorted[k] = reduced_item_list_sorted[k]\
+                        reduced_item_list[k] = reduced_item_list[k]\
                                                       - 1
                         continue
         return total_value
@@ -142,6 +144,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
