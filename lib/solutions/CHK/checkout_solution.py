@@ -1,9 +1,24 @@
 from typing import Dict
 
+ITEM_IDENTIFIERS = {"A", "B", "C", "D"}
+
+
+class PriceSpecs:
+    @staticmethod
+    def price_per_item(item):
+        if item == "A":
+            return 50
+        elif item == "B":
+            return 30
+        elif item == "C":
+            return 20
+        elif item == "D":
+            return 15
+        elif item == "E":
+            return 40
+
 
 class PriceCalculator:
-    ITEM_IDENTIFIERS = {"A", "B", "C", "D"}
-
     def __init__(self, items: Dict[str, int]):
         self.items = items
 
@@ -34,7 +49,7 @@ class PriceCalculator:
 # noinspection PyUnusedLocal
 # skus = unicode string
 def parse_request(skus):
-    item_list = dict.fromkeys(PriceCalculator.ITEM_IDENTIFIERS, 0)
+    item_list = dict.fromkeys(ITEM_IDENTIFIERS, 0)
     if not isinstance(skus, str):
         return None
     for s in skus:
@@ -50,8 +65,5 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
-
-
-
 
 
