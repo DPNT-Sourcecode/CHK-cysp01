@@ -36,29 +36,8 @@ class PriceCalculator:
                                    / disc_quan \
                                    * ITEMS[item].quantity_discounts[disc_quan]
                     if number_of_items - non_discounted_number > 0:
-                        number_of_items = number_of_items - non_discounted_number
+                        number_of_items = non_discounted_number
                 total_value += non_discounted_number*ITEMS[item].price
-                # non_discounted_items_max_disc = self.items[item] % 5
-                # non_discounted_items_count = (non_discounted_items_max_disc) % 3
-                #
-                # total_value = total_value \
-                #               + (self.items[item]
-                #                  - non_discounted_items_max_disc) \
-                #               / 5 \
-                #               * 200 \
-                #               + (non_discounted_items_max_disc
-                #                  - non_discounted_items_count) / 3 \
-                #               * 130 \
-                #               + non_discounted_items_count * \
-                #               ITEMS[item].price
-            # elif item == 'B':
-            #     non_discounted_items_count = self.items[item] % 2
-            #     total_value = total_value \
-            #                   + (self.items[
-            #                          item] - non_discounted_items_count) / 2 \
-            #                   * 45 \
-            #                   + non_discounted_items_count \
-            #                   * ITEMS[item].price
             else:
                 total_value = total_value + self.items[item] \
                               * ITEMS[item].price
@@ -94,11 +73,5 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
-
-
-
-
-
-
 
 
