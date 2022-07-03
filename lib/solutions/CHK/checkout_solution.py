@@ -48,8 +48,9 @@ def parse_request(skus):
 def checkout(skus):
     item_list = parse_request(skus)
     if item_list:
-        return PriceCalculator.calculate_value(item_list)
+        return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
