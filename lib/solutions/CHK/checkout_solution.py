@@ -98,11 +98,14 @@ class PriceCalculator:
 
     def reduce_price_for_group_discount(self, total_value):
         for group_disc in GROUP_DISCOUNTS:
-            reduced_item_list = 
+            reduced_item_list = dict((k, self.items[k])
+                                     for k, v in self.items.keys()
+                                     if k in group_disc.items_list)
+            for key
+            reduced_item_list_sorted = {key: value for key, value in sorted(reduced_item_list.items(), key=lambda item: item[1])})
             total_items_for_group_disc = 0
-
             for item in group_disc.items_list:
-                total_items_for_group_disc += self.items[item]
+                total_items_for_group_disc += reduced_item_list[item]
             if total_items_for_group_disc % group_disc.quantity > 0:
 
 
@@ -125,9 +128,5 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
-
-
-
-
 
 
