@@ -24,6 +24,16 @@ def calculate_value(item_list):
                           + (item_list[item] - non_discounted_items_count)/3 \
                           * 130 \
                           + non_discounted_items_count*50
+        elif item == 'B':
+            non_discounted_items_count = item_list[item] % 2
+            total_value = total_value \
+                          + (item_list[item] - non_discounted_items_count)/2 \
+                          * 45 \
+                          + non_discounted_items_count*30
+        elif item == 'C':
+            total_value = total_value + item_list[item] * 20
+        elif item == 'D':
+            total_value = total_value + item_list[item] * 15
     return total_value
 
 
@@ -32,6 +42,7 @@ def checkout(skus):
     if item_list:
         return calculate_value(item_list)
     return -1
+
 
 
 
