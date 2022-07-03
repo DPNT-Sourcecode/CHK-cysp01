@@ -106,11 +106,13 @@ class PriceCalculator:
                                                   key=lambda item: item[1])}
             total_items_for_group_disc = 0
             for item in group_disc.items_list:
-                total_items_for_group_disc += reduced_item_list_sorted[item]
+                if item in reduced_item_list_sorted.keys():
+                    total_items_for_group_disc += reduced_item_list_sorted[item]
             number_of_items_to_discount = (total_items_for_group_disc
+                                           - total_items_for_group_disc
                                            % group_disc.quantity)\
                                           / group_disc.quantity
-            for i in range(number_of_items_to_discount):
+            for i in range(int(number_of_items_to_discount)):
                 for k in reduced_item_list_sorted.keys():
                     if reduced_item_list_sorted[k] > 0:
                         total_value -= ITEMS[k].price \

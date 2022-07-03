@@ -179,3 +179,11 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
+
+
+def test_checkout_given_group_discount():
+    request = "ABAASSTXYZZZ"
+
+    calc_value = checkout_solution.checkout(request)
+
+    assert calc_value == 260
