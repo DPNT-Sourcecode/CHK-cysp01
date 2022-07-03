@@ -2,17 +2,18 @@ from typing import Dict
 
 
 class PriceSpecs:
-    def __init__(self, price, quantity_discounts={}, item_reducer=''):
+    def __init__(self, price, quantity_discounts=None, item_reducer=None, free_item=0):
         self.price = price
         self.quantity_discounts = quantity_discounts
         self.item_reducer = item_reducer
+        self.free_item = free_item
 
 
 ITEMS = {"A": PriceSpecs(50, {5: 200, 3: 130}),
          "B": PriceSpecs(30, {2: 45}),
          "C": PriceSpecs(20),
          "D": PriceSpecs(15),
-         "E": PriceSpecs(40),
+         "E": PriceSpecs(40, item_reducer={"B": 2}),
          "F": PriceSpecs(10), "G": 20,
                     "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
                     "O":10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
@@ -44,6 +45,9 @@ class PriceCalculator:
         return total_value
 
     def reduce_item_count_based_on_other_items(self):
+        for item in self.items.keys():
+            if ITEMS[item].item_reducer:
+
         number_of_b_items_to_reduce = (self.items["E"] - self.items["E"] % 2) \
                                       / 2
         final_number_of_items = self.items["B"] - number_of_b_items_to_reduce
@@ -73,5 +77,6 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
