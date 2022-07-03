@@ -23,7 +23,9 @@ class PriceDiscounter:
         self.items = items
 
     def reduce_price(self, value):
-        value -= (self.items["A"] - self.items["A"] % 5)*10 - (self.items["A"] - self.items["A"] % 3)*6.7
+        value -= round((self.items["A"] - self.items["A"] % 5)*10
+                       - (self.items["A"] - self.items["A"] % 3)*6.7)
+        value -= round((self.items["B"] - self.items["B"] % 2)*7.5)
         return value
 
 
@@ -77,6 +79,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
