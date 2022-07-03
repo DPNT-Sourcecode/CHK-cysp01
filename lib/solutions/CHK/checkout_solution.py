@@ -101,14 +101,25 @@ class PriceCalculator:
             reduced_item_list = dict((k, self.items[k])
                                      for k, v in self.items.keys()
                                      if k in group_disc.items_list)
-            for key
-            reduced_item_list_sorted = {key: value for key, value in sorted(reduced_item_list.items(), key=lambda item: item[1])})
+            reduced_item_list_sorted = {key: value for key, value
+                                        in sorted(reduced_item_list.items(),
+                                                  key=lambda item: item[1])}
             total_items_for_group_disc = 0
             for item in group_disc.items_list:
-                total_items_for_group_disc += reduced_item_list[item]
-            if total_items_for_group_disc % group_disc.quantity > 0:
-
-
+                total_items_for_group_disc += reduced_item_list_sorted[item]
+            number_of_items_to_discount = (total_items_for_group_disc
+                                           % group_disc.quantity)\
+                                          / group_disc.quantity
+            for i in range(number_of_items_to_discount):
+                for k in reduced_item_list_sorted.keys():
+                    if reduced_item_list_sorted[k] > 0:
+                        total_value -= ITEMS[k].price \
+                                      - group_disc.group_discount_price\
+                                      / group_disc.quantity
+                        reduced_item_list_sorted[k] = reduced_item_list_sorted[k]\
+                                                      - 1
+                        continue
+        return total_value
 # noinspection PyUnusedLocal
 # skus = unicode string
 def parse_request(skus):
@@ -128,5 +139,6 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
