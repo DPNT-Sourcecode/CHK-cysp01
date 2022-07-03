@@ -76,7 +76,8 @@ class PriceCalculator:
             else:
                 total_value = total_value + self.items[item] \
                               * ITEMS[item].price
-        return self.reduce_price_for_group_discount(total_value)
+        # return self.reduce_price_for_group_discount(total_value)
+        return total_value
 
     def reduce_item_count_based_on_other_items(self):
         for item in self.items.keys():
@@ -139,6 +140,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
