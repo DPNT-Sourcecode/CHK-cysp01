@@ -1,5 +1,6 @@
 ITEM_IDENTIFIERS = {"A", "B", "C", "D"}
-
+class PriceCalculator:
+    def __init__(self, items: Dict(str, int)):
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -42,5 +43,6 @@ def checkout(skus):
     if item_list:
         return calculate_value(item_list)
     return -1
+
 
 
