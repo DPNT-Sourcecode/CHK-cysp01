@@ -1,12 +1,15 @@
 from typing import Dict
 
+
 class ItemReducer:
     def __init__(self, item, quantity):
         self.item = item
         self.quantity = quantity
 
+
 class PriceSpecs:
-    def __init__(self, price, quantity_discounts=None, item_reducer=None, free_item=0):
+    def __init__(
+            self, price, quantity_discounts=None, item_reducer=None, free_item=0):
         self.price = price
         self.quantity_discounts = quantity_discounts
         self.item_reducer = item_reducer
@@ -60,10 +63,10 @@ class PriceCalculator:
                 self.items[item_to_reduce] = final_number_of_items \
                     if final_number_of_items > 0 else 0
             if ITEMS[item].free_item > 0:
-                number_of_items_to_reduce = int(self.items[item]
+                number_of_free_items_to_reduce = int(self.items[item]
                                                   / ITEMS[item].free_item)
 
-                self.items[item] = self.items[item] - number_of_items_to_reduce
+                self.items[item] = self.items[item] - number_of_free_items_to_reduce
         # if "F" in self.items.keys() and self.items["F"] > 2:
         #     number_of_f_items_to_reduce = int(self.items["F"] / 3)
         #     self.items["F"] = self.items["F"] - number_of_f_items_to_reduce
@@ -88,6 +91,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
