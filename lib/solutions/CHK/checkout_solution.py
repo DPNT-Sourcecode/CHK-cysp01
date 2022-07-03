@@ -8,10 +8,10 @@ def parse_request(skus):
     if not isinstance(skus, str):
         return None
     for s in skus:
-        if s.upper() not in item_list.keys():
+        if s not in item_list.keys():
             return None
         else:
-            item_list[s.upper()] = item_list[s.upper()] + 1
+            item_list[s] = item_list[s] + 1
     return item_list
 
 
@@ -42,6 +42,7 @@ def checkout(skus):
     if item_list:
         return calculate_value(item_list)
     return -1
+
 
 
 

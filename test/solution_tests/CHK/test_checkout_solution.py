@@ -31,8 +31,7 @@ def test_parse_request_given_request_with_mixed_case():
 
     obtained_items = checkout_solution.parse_request(request)
 
-    expected_items = {"A": 2, "B": 1, "C": 1, "D": 0}
-    assert obtained_items == expected_items
+    assert obtained_items is None
 
 
 def test_calculate_value_given_item_a_and_no_discount():
@@ -113,6 +112,7 @@ def test_checkout_given_invalid_request():
     calc_value = checkout_solution.checkout(request)
 
     assert calc_value == -1
+
 
 
 
