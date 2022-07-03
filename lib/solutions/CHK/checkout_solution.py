@@ -1,6 +1,9 @@
 from typing import Dict
 
-
+class ItemReducer:
+    def __init__(self, item, quantity):
+        self.item = item
+        self.quantity = quantity
 class PriceSpecs:
     def __init__(self, price, quantity_discounts=None, item_reducer=None, free_item=0):
         self.price = price
@@ -13,7 +16,7 @@ ITEMS = {"A": PriceSpecs(50, {5: 200, 3: 130}),
          "B": PriceSpecs(30, {2: 45}),
          "C": PriceSpecs(20),
          "D": PriceSpecs(15),
-         "E": PriceSpecs(40, item_reducer={"B": 2}),
+         "E": PriceSpecs(40, item_reducer=ItemReducer("B", 2)),
          "F": PriceSpecs(10), "G": 20,
                     "H": 10, "I": 35, "J": 60, "K": 80, "L": 90, "M": 50, "N": 40,
                     "O":10, "P":50, "Q": 30, "R": 50, "S":30, "T": 20, "U": 40,
@@ -47,12 +50,14 @@ class PriceCalculator:
     def reduce_item_count_based_on_other_items(self):
         for item in self.items.keys():
             if ITEMS[item].item_reducer:
-
-        number_of_b_items_to_reduce = (self.items["E"] - self.items["E"] % 2) \
-                                      / 2
-        final_number_of_items = self.items["B"] - number_of_b_items_to_reduce
-        self.items["B"] = final_number_of_items if final_number_of_items > 0 \
-            else 0
+                item_to_reduce = ITEMS[item].item_reducer.item
+                number_of_items_to_reduce = (self.items[item] - self.items[item]
+                                             % ITEMS[item].item_reducer.quantity)\
+                                            /ITEMS[item].item_reducer.quantity
+                final_number_of_items = self.items[item_to_reduce] \
+                                        - number_of_items_to_reduce
+                self.items[item_to_reduce] = final_number_of_items \
+                    if final_number_of_items > 0 else 0
         if "F" in self.items.keys() and self.items["F"] > 2:
             number_of_f_items_to_reduce = int(self.items["F"] / 3)
             self.items["F"] = self.items["F"] - number_of_f_items_to_reduce
@@ -77,6 +82,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
