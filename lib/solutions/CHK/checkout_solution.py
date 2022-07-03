@@ -7,6 +7,13 @@ class ItemReducer:
         self.quantity = quantity
 
 
+class GroupDiscount:
+    def __init__(self, items_list, quantity, group_discount_price):
+        self.items_list = items_list
+        self.quantity = quantity
+        self.group_discount_price = group_discount_price
+
+
 class PriceSpecs:
     def __init__(
             self, price, quantity_discounts=None, item_reducer=None, free_item=0):
@@ -14,6 +21,9 @@ class PriceSpecs:
         self.quantity_discounts = quantity_discounts
         self.item_reducer = item_reducer
         self.free_item = free_item
+
+
+GROUP_DISCOUNTS = [GroupDiscount(["S", "T", "X", "Y", "Z"], 3, 45)]
 
 
 ITEMS = {"A": PriceSpecs(50, quantity_discounts={5: 200, 3: 130}),
@@ -37,11 +47,11 @@ ITEMS = {"A": PriceSpecs(50, quantity_discounts={5: 200, 3: 130}),
          "S": PriceSpecs(20),
          "T": PriceSpecs(20),
          "U": PriceSpecs(40, free_item=4),
-         "V": PriceSpecs(50, quantity_discounts={3: 130, 2:90}),
+         "V": PriceSpecs(50, quantity_discounts={3: 130, 2: 90}),
          "W": PriceSpecs(20),
          "X": PriceSpecs(17),
          "Y": PriceSpecs(20),
-         "Z": PriceSpecs(50)}
+         "Z": PriceSpecs(21)}
 
 
 class PriceCalculator:
@@ -66,7 +76,7 @@ class PriceCalculator:
             else:
                 total_value = total_value + self.items[item] \
                               * ITEMS[item].price
-        return total_value
+        return self.reduce_price_for_group_discount(total_value)
 
     def reduce_item_count_based_on_other_items(self):
         for item in self.items.keys():
@@ -83,10 +93,12 @@ class PriceCalculator:
                 number_of_free_items_to_reduce = int(self.items[item]
                                                   / ITEMS[item].free_item)
 
-                self.items[item] = self.items[item] - number_of_free_items_to_reduce
-        # if "F" in self.items.keys() and self.items["F"] > 2:
-        #     number_of_f_items_to_reduce = int(self.items["F"] / 3)
-        #     self.items["F"] = self.items["F"] - number_of_f_items_to_reduce
+                self.items[item] = self.items[item] \
+                                   - number_of_free_items_to_reduce
+
+    def reduce_price_for_group_discount(self, total_value):
+        for group_disc in GROUP_DISCOUNTS:
+            self.items 
 
 
 # noinspection PyUnusedLocal
@@ -108,6 +120,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
