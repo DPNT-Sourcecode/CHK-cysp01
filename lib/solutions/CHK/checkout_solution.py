@@ -18,15 +18,15 @@ class PriceSpecs:
             return 40
 
 
-class PriceDiscounter:
-    def __init__(self, items: Dict[str, int]):
-        self.items = items
-
-    def reduce_price(self, value):
-        value -= round((self.items["A"] - self.items["A"] % 5)*10
-                       - (self.items["A"] - self.items["A"] % 3)*6.7)
-        value -= round((self.items["B"] - self.items["B"] % 2)*7.5)
-        return value
+# class PriceDiscounter:
+#     def __init__(self, items: Dict[str, int]):
+#         self.items = items
+#
+#     def reduce_price(self, value):
+#         value -= round((self.items["A"] - self.items["A"] % 5)*10
+#                        - (self.items["A"] - self.items["A"] % 3)*6.7)
+#         value -= round((self.items["B"] - self.items["B"] % 2)*7.5)
+#         return value
 
 
 class PriceCalculator:
@@ -35,30 +35,38 @@ class PriceCalculator:
 
     def calculate_value(self):
         total_value = 0
+
         for item in self.items.keys():
-            total_value += self.items[item]*PriceSpecs.price_per_item(item)
-        return PriceDiscounter(self.items).reduce_price(total_value)
+            if item == "A":
+                non_discounted_items_count = self.items[item] % 3
+                total_value = total_value \
+                              + (self.items[
+                                     item] - non_discounted_items_count) / 3 \
+                              * 130 \
+                              + non_discounted_items_count * \
+                              PriceSpecs.price_per_item(item)
+            elif item == 'B':
+                non_discounted_items_count = self.items[item] % 2
+                total_value = total_value \
+                              + (self.items[
+                                     item] - non_discounted_items_count) / 2 \
+                              * 45 \
+                              + non_discounted_items_count \
+                              * PriceSpecs.price_per_item(item)
+            elif item == 'C':
+                total_value = total_value + self.items[item] \
+                              * PriceSpecs.price_per_item(item)
+            elif item == 'D':
+                total_value = total_value + self.items[item] \
+                              * PriceSpecs.price_per_item(item)
+        return total_value
 
-        #     if item == "A":
-        #         non_discounted_items_count = self.items[item] % 3
-        #         total_value = total_value \
-        #                       + (self.items[
-        #                              item] - non_discounted_items_count) / 3 \
-        #                       * 130 \
-        #                       + non_discounted_items_count * 50
-        #     elif item == 'B':
-        #         non_discounted_items_count = self.items[item] % 2
-        #         total_value = total_value \
-        #                       + (self.items[
-        #                              item] - non_discounted_items_count) / 2 \
-        #                       * 45 \
-        #                       + non_discounted_items_count * 30
-        #     elif item == 'C':
-        #         total_value = total_value + self.items[item] * 20
-        #     elif item == 'D':
-        #         total_value = total_value + self.items[item] * 15
-        # return total_value
-
+    def reduce_item_count_based_on_other_items(self):
+        number_of_b_items_to_reduce = (self.items["E"] - self.items["E"] % 2) \
+                                      / 2
+        final_number_of_items = self.items["B"] - number_of_b_items_to_reduce
+        self.items["B"] = final_number_of_items if final_number_of_items > 0 \
+            else 0
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -79,8 +87,5 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
-
-
-
 
 
