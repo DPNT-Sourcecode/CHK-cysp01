@@ -38,10 +38,15 @@ class PriceCalculator:
 
         for item in self.items.keys():
             if item == "A":
-                non_discounted_items_count = self.items[item] % 3
+                non_discounted_items_max_disc = self.items[item] % 5
+                non_discounted_items_count = (non_discounted_items_max_disc) % 3
                 total_value = total_value \
-                              + (self.items[
-                                     item] - non_discounted_items_count) / 3 \
+                              + (self.items[item]
+                                 - non_discounted_items_max_disc) \
+                              / 5 \
+                              * 200 \
+                              + (non_discounted_items_max_disc
+                                 - non_discounted_items_count) / 3 \
                               * 130 \
                               + non_discounted_items_count * \
                               PriceSpecs.price_per_item(item)
@@ -87,5 +92,6 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
