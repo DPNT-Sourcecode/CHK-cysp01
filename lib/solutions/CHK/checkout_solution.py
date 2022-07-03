@@ -122,7 +122,7 @@ class PriceCalculator:
                                       / group_disc.quantity
                         reduced_item_list[k] = reduced_item_list[k]\
                                                       - 1
-                        continue
+                        break
         return total_value
 
 # noinspection PyUnusedLocal
@@ -144,6 +144,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
