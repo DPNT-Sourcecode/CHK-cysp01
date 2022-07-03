@@ -99,5 +99,21 @@ def test_calculate_value_given_item_d():
     assert calc_value == 30
 
 
+def test_checkout_given_valid_request():
+    request = "ABAACBAD"
+
+    calc_value = checkout_solution.checkout(request)
+
+    assert calc_value == 260
+
+
+def test_checkout_given_invalid_request():
+    request = "ABAACBAD+"
+
+    calc_value = checkout_solution.checkout(request)
+
+    assert calc_value == -1
+
+
 
 
