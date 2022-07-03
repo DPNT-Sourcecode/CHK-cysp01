@@ -31,12 +31,12 @@ class PriceCalculator:
                 non_discounted_number = self.items[item]
                 number_of_items = self.items[item]
                 for disc_quan in ITEMS[item].quantity_discounts.keys():
-                    non_discounted_number = non_discounted_number % disc_quan
+                    non_discounted_number = number_of_items % disc_quan
                     total_value += (number_of_items - non_discounted_number) \
                                    / disc_quan \
                                    * ITEMS[item].quantity_discounts[disc_quan]
-                    number_of_items = max(0,
-                                          number_of_items - non_discounted_number)
+                    if number_of_items - non_discounted_number > 0:
+                        number_of_items = number_of_items - non_discounted_number
                 total_value += non_discounted_number*ITEMS[item].price
                 # non_discounted_items_max_disc = self.items[item] % 5
                 # non_discounted_items_count = (non_discounted_items_max_disc) % 3
@@ -94,6 +94,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
