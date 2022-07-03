@@ -98,7 +98,12 @@ class PriceCalculator:
 
     def reduce_price_for_group_discount(self, total_value):
         for group_disc in GROUP_DISCOUNTS:
-            self.items 
+            reduced_item_list = 
+            total_items_for_group_disc = 0
+
+            for item in group_disc.items_list:
+                total_items_for_group_disc += self.items[item]
+            if total_items_for_group_disc % group_disc.quantity > 0:
 
 
 # noinspection PyUnusedLocal
@@ -120,6 +125,7 @@ def checkout(skus):
     if item_list:
         return PriceCalculator(item_list).calculate_value()
     return -1
+
 
 
 
